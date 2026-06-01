@@ -24,7 +24,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://chatsphere-three-mu.vercel.app",
+    ],
     credentials: true,
   })
 );
