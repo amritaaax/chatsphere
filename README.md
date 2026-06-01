@@ -136,20 +136,6 @@ npm run dev
 ```
 
 ---
-
-## 📸 Screenshots
-
-### Login Page
-Add your login page screenshot here.
-
-### Chat Interface
-Add your chat page screenshot here.
-
-### Profile Section
-Add your profile page screenshot here.
-
----
-
 ## 🎯 Key Learning Outcomes
 
 - Full Stack MERN Development
