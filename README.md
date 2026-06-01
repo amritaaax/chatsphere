@@ -148,6 +148,7 @@ npm run dev
 - Responsive Frontend Development
 
 ---
+<img width="1898" height="715" alt="image" src="https://github.com/user-attachments/assets/37faf398-da6c-46b3-bfb2-d6e7ff269e62" />
 
 ## Live Demo
 
