@@ -149,6 +149,15 @@ npm run dev
 
 ---
 
+## Live Demo
+
+### Frontend
+https://chatsphere-three-mu.vercel.app
+
+### Backend API
+https://chatsphere-backend-fu77.onrender.com
+
+
 ## 🔮 Future Improvements
 
 - Emoji Reactions
