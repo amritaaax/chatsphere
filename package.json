@@ -1,13 +1,22 @@
 {
-  "name": "chat-app",
+  "name": "chatsphere",
   "version": "1.0.0",
-  "description": "",
+  "description": "A full-stack real-time chat application built using MERN Stack and Socket.io",
   "main": "index.js",
   "scripts": {
     "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
     "start": "npm run start --prefix backend"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mern",
+    "chat-app",
+    "socketio",
+    "mongodb",
+    "react",
+    "nodejs",
+    "express",
+    "realtime-chat"
+  ],
+  "author": "Amrita Thakur",
   "license": "ISC"
 }

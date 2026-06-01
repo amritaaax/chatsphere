@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, Mail, User, Shield, Calendar, CheckCircle, Zap } from "lucide-react";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -9,11 +9,8 @@ const ProfilePage = () => {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
-
     reader.onload = async () => {
       const base64Image = reader.result;
       setSelectedImg(base64Image);
@@ -21,35 +18,37 @@ const ProfilePage = () => {
     };
   };
 
+  const memberSince = authUser.createdAt?.split("T")[0];
+
+  // Profile completion
+  const fields = [
+    !!authUser.profilePic,
+    !!authUser.fullName,
+    !!authUser.email,
+  ];
+  const completion = Math.round((fields.filter(Boolean).length / fields.length) * 100);
+
   return (
-    <div className="h-screen pt-20">
-      <div className="max-w-2xl mx-auto p-4 py-8">
-        <div className="bg-base-300 rounded-xl p-6 space-y-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-semibold ">Profile</h1>
-            <p className="mt-2">Your profile information</p>
-          </div>
+    <div className="profile-page-root">
+      <div className="profile-page-inner">
 
-          {/* avatar upload section */}
-
-          <div className="flex flex-col items-center gap-4">
-            <div className="relative">
+        {/* ── Cover + Avatar ── */}
+        <div className="profile-cover">
+          <div className="profile-cover-bg" />
+          <div className="profile-cover-content">
+            {/* Avatar */}
+            <div className="profile-avatar-wrap">
               <img
                 src={selectedImg || authUser.profilePic || "/avatar.png"}
                 alt="Profile"
-                className="size-32 rounded-full object-cover border-4 "
+                className="profile-avatar-img"
               />
               <label
                 htmlFor="avatar-upload"
-                className={`
-                  absolute bottom-0 right-0 
-                  bg-base-content hover:scale-105
-                  p-2 rounded-full cursor-pointer 
-                  transition-all duration-200
-                  ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}
-                `}
+                className={`profile-camera-btn ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}`}
+                title="Update photo"
               >
-                <Camera className="w-5 h-5 text-base-200" />
+                <Camera className="w-4 h-4 text-white" />
                 <input
                   type="file"
                   id="avatar-upload"
@@ -59,46 +58,120 @@ const ProfilePage = () => {
                   disabled={isUpdatingProfile}
                 />
               </label>
-            </div>
-            <p className="text-sm text-zinc-400">
-              {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Full Name
-              </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.fullName}</p>
+              {/* Online dot */}
+              <span className="profile-online-dot" />
             </div>
 
-            <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email Address
-              </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
+            {/* Name + status */}
+            <div className="text-center mt-3">
+              <h1 className="text-2xl font-black text-white">{authUser.fullName}</h1>
+              <p className="text-white/50 text-sm mt-1">{authUser.email}</p>
+              {isUpdatingProfile && (
+                <p className="text-pink-400 text-xs mt-1 animate-pulse">Uploading photo...</p>
+              )}
             </div>
-          </div>
 
-          <div className="mt-6 bg-base-300 rounded-xl p-6">
-            <h2 className="text-lg font-medium  mb-4">Account Information</h2>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between py-2 border-b border-zinc-700">
-                <span>Member Since</span>
-                <span>{authUser.createdAt?.split("T")[0]}</span>
+            {/* Stat pills */}
+            <div className="flex gap-3 mt-4 flex-wrap justify-center">
+              <div className="profile-stat-pill">
+                <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+                <span className="text-green-400 text-xs font-semibold">Active</span>
               </div>
-              <div className="flex items-center justify-between py-2">
-                <span>Account Status</span>
-                <span className="text-green-500">Active</span>
+              <div className="profile-stat-pill">
+                <Shield className="w-3.5 h-3.5 text-violet-400" />
+                <span className="text-violet-400 text-xs font-semibold">Verified</span>
+              </div>
+              <div className="profile-stat-pill">
+                <Calendar className="w-3.5 h-3.5 text-white/40" />
+                <span className="text-white/40 text-xs font-semibold">Since {memberSince}</span>
               </div>
             </div>
           </div>
         </div>
+
+        {/* ── Profile completion ── */}
+        <div className="profile-card">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <p className="text-white/80 text-sm font-bold">Profile Completion</p>
+              <p className="text-white/35 text-xs">Fill in details to complete your profile</p>
+            </div>
+            <span className="text-2xl font-black text-gradient">{completion}%</span>
+          </div>
+          <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-700"
+              style={{
+                width: `${completion}%`,
+                background: "linear-gradient(90deg, #ec4899, #7c3aed)",
+              }}
+            />
+          </div>
+          {completion < 100 && (
+            <p className="text-white/30 text-xs mt-2">
+              Add a profile photo to reach 100% ✨
+            </p>
+          )}
+        </div>
+
+        {/* ── Info cards ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+          <div className="profile-info-card">
+            <div className="profile-info-icon">
+              <User className="w-4 h-4 text-pink-400" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-white/35 text-xs font-semibold uppercase tracking-wider mb-1">Full Name</p>
+              <p className="text-white font-semibold text-sm truncate">{authUser.fullName}</p>
+            </div>
+          </div>
+
+          <div className="profile-info-card">
+            <div className="profile-info-icon">
+              <Mail className="w-4 h-4 text-violet-400" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-white/35 text-xs font-semibold uppercase tracking-wider mb-1">Email</p>
+              <p className="text-white font-semibold text-sm truncate">{authUser.email}</p>
+            </div>
+          </div>
+
+          <div className="profile-info-card">
+            <div className="profile-info-icon">
+              <Calendar className="w-4 h-4 text-blue-400" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-white/35 text-xs font-semibold uppercase tracking-wider mb-1">Member Since</p>
+              <p className="text-white font-semibold text-sm">{memberSince}</p>
+            </div>
+          </div>
+
+          <div className="profile-info-card">
+            <div className="profile-info-icon">
+              <Zap className="w-4 h-4 text-yellow-400" fill="currentColor" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-white/35 text-xs font-semibold uppercase tracking-wider mb-1">Account Plan</p>
+              <p className="text-white font-semibold text-sm">Free Forever ✨</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Security note ── */}
+        <div className="profile-security-card">
+          <Shield className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-white/70 text-sm font-semibold">Your data is secure</p>
+            <p className="text-white/30 text-xs mt-0.5">
+              All messages are transmitted securely. Profile data is encrypted at rest.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   );
 };
+
 export default ProfilePage;
