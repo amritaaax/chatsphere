@@ -148,7 +148,14 @@ npm run dev
 - Responsive Frontend Development
 
 ---
-<img width="1898" height="715" alt="image" src="https://github.com/user-attachments/assets/37faf398-da6c-46b3-bfb2-d6e7ff269e62" />
+<img width="1898" height="715" alt="image" src="https://github.com/user-attachments/assets/37faf398-da6c-46b3-bfb2-d6e7ff269e62" /><img width="1876" height="911" alt="image" src="https://github.com/user-attachments/assets/1921d241-ef72-4911-ac7f-9e19a2e3f0f7" />
+
+<img width="1638" height="887" alt="image" src="https://github.com/user-attachments/assets/3f6432d1-6ee3-456f-a41a-ed0a76de93c3" />
+<img width="1800" height="919" alt="image" src="https://github.com/user-attachments/assets/c76c5ce3-6751-4a6a-bd67-98802f5ea56e" />
+<img width="1898" height="683" alt="image" src="https://github.com/user-attachments/assets/e6c1850a-635c-45be-bac5-6b01aa772225" />
+
+
+
 
 ## Live Demo
 
